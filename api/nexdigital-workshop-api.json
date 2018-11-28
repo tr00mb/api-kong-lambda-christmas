@@ -1,0 +1,529 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is an API to interact with Kong and AWS Lambda",
+    "version": "1.0",
+    "title": "nexDigital Workshop API",
+    "termsOfService": "https://api.nexdigital.fr/portal/term-of-services/",
+    "contact": {
+      "email": "apiteam@nexdigital.fr"
+    }
+  },
+  "host": "api.nexdigital.fr",
+  "basePath": "/workshop",
+  "tags": [
+    {
+      "name": "Products"
+    },
+    {
+      "name": "Deliveries"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "parameters": {
+    "CommonPathParameterHeader": {
+      "name": "X-API-Version",
+      "type": "string",
+      "in": "header",
+      "required": false
+    }
+  },
+  "paths": {
+    "/products": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get products list",
+        "description": "Get a list of all available products",
+        "operationId": "getAllProducts",
+        "security": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/CommonPathParameterHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/get_products_list_response"
+            }
+          },
+          "400": {
+            "description": "Authorization field missing, malformed or invalid"
+          },
+          "401": {
+            "description": "You don't have permissions to use this API"
+          },
+          "403": {
+            "description": "Key not authorized | Quota exceeded | Access to this resource has been disallowed"
+          },
+          "404": {
+            "description": "There is an element which hasn't been found"
+          },
+          "405": {
+            "description": "Method not allowed"
+          },
+          "411": {
+            "description": "Content length is required for this request"
+          },
+          "429": {
+            "description": "API Rate limit exceeded"
+          },
+          "500": {
+            "description": "Error message when an unexpected condition was encountered on the API"
+          },
+          "503": {
+            "description": "API is currently unavailable. This is a temporary state"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Create new products",
+        "description": "Create a list of new products",
+        "operationId": "createProducts",
+        "security": [],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/CommonPathParameterHeader"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/create_product_request"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/create_product_response"
+            }
+          },
+          "400": {
+            "description": "Authorization field missing, malformed or invalid"
+          },
+          "401": {
+            "description": "You don't have permissions to use this API"
+          },
+          "403": {
+            "description": "Key not authorized | Quota exceeded | Access to this resource has been disallowed"
+          },
+          "404": {
+            "description": "There is an element which hasn't been found"
+          },
+          "405": {
+            "description": "Method not allowed"
+          },
+          "411": {
+            "description": "Content length is required for this request"
+          },
+          "429": {
+            "description": "API Rate limit exceeded"
+          },
+          "500": {
+            "description": "Error message when an unexpected condition was encountered on the API"
+          },
+          "503": {
+            "description": "API is currently unavailable. This is a temporary state"
+          }
+        }
+      }
+    },
+    "/products/{product_id}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get product details",
+        "description": "Get details for a specific product",
+        "operationId": "getProductDetails",
+        "security": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/CommonPathParameterHeader"
+          },
+          {
+            "name": "product_id",
+            "in": "path",
+            "description": "ID of a product to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/get_product_details_response"
+            }
+          },
+          "400": {
+            "description": "Authorization field missing, malformed or invalid"
+          },
+          "401": {
+            "description": "You don't have permissions to use this API"
+          },
+          "403": {
+            "description": "Key not authorized | Quota exceeded | Access to this resource has been disallowed"
+          },
+          "404": {
+            "description": "There is an element which hasn't been found"
+          },
+          "405": {
+            "description": "Method not allowed"
+          },
+          "411": {
+            "description": "Content length is required for this request"
+          },
+          "429": {
+            "description": "API Rate limit exceeded"
+          },
+          "500": {
+            "description": "Error message when an unexpected condition was encountered on the API"
+          },
+          "503": {
+            "description": "API is currently unavailable. This is a temporary state"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Update a product",
+        "description": "Update an existing product",
+        "operationId": "updateExistingProduct",
+        "security": [],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/CommonPathParameterHeader"
+          },
+          {
+            "name": "product_id",
+            "in": "path",
+            "description": "ID of a product to return",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/update_product_request"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Authorization field missing, malformed or invalid"
+          },
+          "401": {
+            "description": "You don't have permissions to use this API"
+          },
+          "403": {
+            "description": "Key not authorized | Quota exceeded | Access to this resource has been disallowed"
+          },
+          "404": {
+            "description": "There is an element which hasn't been found"
+          },
+          "405": {
+            "description": "Method not allowed"
+          },
+          "411": {
+            "description": "Content length is required for this request"
+          },
+          "429": {
+            "description": "API Rate limit exceeded"
+          },
+          "500": {
+            "description": "Error message when an unexpected condition was encountered on the API"
+          },
+          "503": {
+            "description": "API is currently unavailable. This is a temporary state"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Delete a product",
+        "description": "Delete an existing product",
+        "operationId": "deleteExistingProduct",
+        "security": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/CommonPathParameterHeader"
+          },
+          {
+            "name": "product_id",
+            "in": "path",
+            "description": "ID of product to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Authorization field missing, malformed or invalid"
+          },
+          "401": {
+            "description": "You don't have permissions to use this API"
+          },
+          "403": {
+            "description": "Key not authorized | Quota exceeded | Access to this resource has been disallowed"
+          },
+          "404": {
+            "description": "There is an element which hasn't been found"
+          },
+          "405": {
+            "description": "Method not allowed"
+          },
+          "411": {
+            "description": "Content length is required for this request"
+          },
+          "429": {
+            "description": "API Rate limit exceeded"
+          },
+          "500": {
+            "description": "Error message when an unexpected condition was encountered on the API"
+          },
+          "503": {
+            "description": "API is currently unavailable. This is a temporary state"
+          }
+        }
+      }
+    },
+    "/deliveries": {
+      "post": {
+        "tags": [
+          "Deliveries"
+        ],
+        "summary": "Create new delivery",
+        "description": "Create a new delivery for a specific address",
+        "operationId": "createDeliveriesForAddress",
+        "security": [],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/CommonPathParameterHeader"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/delivery_request"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/delivery_response"
+            }
+          },
+          "400": {
+            "description": "Authorization field missing, malformed or invalid"
+          },
+          "401": {
+            "description": "You don't have permissions to use this API"
+          },
+          "403": {
+            "description": "Key not authorized | Quota exceeded | Access to this resource has been disallowed"
+          },
+          "404": {
+            "description": "There is an element which hasn't been found"
+          },
+          "405": {
+            "description": "Method not allowed"
+          },
+          "411": {
+            "description": "Content length is required for this request"
+          },
+          "429": {
+            "description": "API Rate limit exceeded"
+          },
+          "500": {
+            "description": "Error message when an unexpected condition was encountered on the API"
+          },
+          "503": {
+            "description": "API is currently unavailable. This is a temporary state"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "get_products_list_response": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": "9876"
+          },
+          "name": {
+            "type": "string",
+            "example": "Christmas card"
+          }
+        }
+      }
+    },
+    "create_product_request": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Christmas card"
+        },
+        "description": {
+          "type": "string",
+          "example": "This is your new nexDigital card for christmas time!"
+        },
+        "unit_price": {
+          "type": "number",
+          "example": "5"
+        },
+        "nb_stock": {
+          "type": "number",
+          "example": "2000"
+        }         
+      }
+    },
+    "create_product_response": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": "9876"
+        }        
+      }
+    },
+    "get_product_details_response": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Christmas card"
+        },
+        "description": {
+          "type": "string",
+          "example": "This is your new nexDigital card for christmas time!"
+        },
+        "unit_price": {
+          "type": "number",
+          "example": "5"
+        },
+        "nb_stock": {
+          "type": "number",
+          "example": "2000"
+        }         
+      }
+    },
+    "update_product_request": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "example": "This is your new nexDigital card for christmas time!"
+        },
+        "unit_price": {
+          "type": "number",
+          "example": "5.5"
+        },
+        "nb_stock": {
+          "type": "number",
+          "example": "1500"
+        }         
+      }
+    },
+    "delivery_request": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string",
+          "example": "73 rue Anatole France, 92300 Levallois-Perret, France"
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number",
+                "example": "9876"
+              },
+              "quantity": {
+                "type": "number",
+                "example": "2"
+              },
+            }
+          }  
+        }
+      }
+    },
+    "delivery_response": {
+      "type": "object",
+      "properties": {
+        "distance": {
+          "type": "number",
+          "example": "120"
+        },
+        "delivery_cost": {
+          "type": "number",
+          "example": "10"
+        },
+        "total_price": {
+          "type": "number",
+          "example": "50"
+        }
+      }
+    }
+  }  
+}
