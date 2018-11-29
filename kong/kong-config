@@ -1,0 +1,20 @@
+kong_admin=35.180.86.231:8001
+export kong_admin
+
+#create generic products service
+curl -X POST --url http://$kong_admin/services --data 'name=products' --data 'url=http://aws-lambda'
+
+#create different routes to be able to have different aws-lambda call on each route
+curl -X POST --url http://$kong_admin/services/products/routes --data 'methods[]=GET' --data 'paths[]=/products'
+curl -X POST --url http://$kong_admin/services/products/routes --data 'methods[]=POST' --data 'paths[]=/products'
+curl -X POST --url http://$kong_admin/services/products/routes --data 'methods[]=GET' --data 'paths[]=/products/\S+'
+curl -X POST --url http://$kong_admin/services/products/routes --data 'methods[]=POST' --data 'paths[]=/products'
+curl -X POST --url http://$kong_admin/services/products/routes --data 'methods[]=PUT' --data-urlencode 'paths[]=/products/\S+'
+curl -X POST --url http://$kong_admin/services/products/routes --data 'methods[]=DELETE' --data-urlencode 'paths[]=/products/\S+'
+
+#create generic products service
+curl -X POST --url http://$kong_admin/services --data 'name=deliveries' --data 'url=http://aws-lambda'
+
+#create a route for POST deliveries
+curl -X POST --url http://$kong_admin/services/deliveries/routes --data 'methods[]=POST' --data 'paths[]=/deliveries'
+
