@@ -1,3 +1,15 @@
+# Kong installation
+We will use the ami from aws marketplace. https://aws.amazon.com/marketplace/pp/B06WP4TNKL
+You should subscribe, and then continue the configuration:
+  Choose EU(Paris) as a region
+Continue to launch
+  Choose t2.medium as instance type
+  Leave VPC and subnet as it is
+  Create security group by clicking on Create New Based On Seller Settings
+  Create a key pair (which will give you access to the instance by ssh)
+  
+Check the installation by accessing to the admin api
+curl yourInstanceIP:8001
 
 # Kong configuration
 
