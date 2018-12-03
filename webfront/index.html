@@ -19,7 +19,7 @@
         <script src="js/typed.js"></script>
 
         <script type="text/javascript">
-            var API_PLATFORM_URL = "https://88978a54-a024-4442-8973-30cbcbdbfc31.mock.pstmn.io";
+            var API_PLATFORM_URL = "https://6af0c24d-5bec-4593-a9cf-de2cac5fc69d.mock.pstmn.io";
             var API_PRODUCTS = API_PLATFORM_URL + '/workshop/products';
             var API_DELIVERIES = API_PLATFORM_URL + '/workshop/deliveries';
         </script>
@@ -45,11 +45,12 @@
                                     var productUnitPrice = json.unit_price;
                                     var productNbStock = json.nb_stock;
                                     var productDesc = json.description;
+                                    var productImage = json.image_uri;
 
                                     if(productNbStock > 0) {
-                                        document.getElementById("products-catalog").innerHTML = '<div id=\"' + productID + '\" class=\"product-details column center-text-for-small-only\"><div class=\"product-details-add-to-cart\"><h3>' + productName + '</h3><p class=\"product-description\">' + productDesc + '</p><p><span class=\"in-stock\">In Stock</span> <span class=\"dim-text\">(Only ' + productNbStock + ' left in Stock)</span></p><hr><p class=\"price\" id=\"' + productID + '_price\">€' + productUnitPrice + '</p><p><span>Qty:</span> <input id=\"' + productID + '_input\" class=\"qty\" type=\"text\" value=\"1\" oninput=\"updateProductPrice(' + productID + ');\"> </p><button class=\"button expanded\" onclick=\"updateBasket(' + productID + ');\">Add to Cart</button></div></div>';
+                                        document.getElementById("products-catalog").innerHTML = '<div id=\"' + productID + '\" class=\"product-details column center-text-for-small-only\"><div class=\"product-details-add-to-cart\"><h3>' + productName + '</h3><p><img src=\"' + productImage + '\" style=\"max-width: 120px;\"/></p><p class=\"product-description\">' + productDesc + '</p><p><span class=\"in-stock\">In Stock</span> <span class=\"dim-text\">(Only ' + productNbStock + ' left in Stock)</span></p><hr><p class=\"price\" id=\"' + productID + '_price\">€' + productUnitPrice + '</p><p><span>Qty:</span> <input id=\"' + productID + '_input\" class=\"qty\" type=\"text\" value=\"1\" oninput=\"updateProductPrice(' + productID + ');\"> </p><button class=\"button expanded\" onclick=\"updateBasket(' + productID + ');\">Add to Cart</button></div></div>';
                                     } else {
-                                        document.getElementById("products-catalog").innerHTML = '<div id=\"' + productID + '\" class=\"product-details column center-text-for-small-only\"><div class=\"product-details-add-to-cart\"><h3>' + productName + '</h3><p class=\"product-description\">' + productDesc + '</p><p><span class=\"out-of-stock\">Out of Stock</span></p><hr><p class=\"price\" id=\"' + productID + '_price\">€' + productUnitPrice + '</p><p><span>Qty:</span> <input id=\"' + productID + '_input\" class=\"qty\" type=\"text\" value=\"1\" oninput=\"updateProductPrice(' + productID + ');\"> </p><button class=\"button expanded\" onclick=\"updateBasket(' + productID + ');\">Add to Cart</button></div></div>';   
+                                        document.getElementById("products-catalog").innerHTML = '<div id=\"' + productID + '\" class=\"product-details column center-text-for-small-only\"><div class=\"product-details-add-to-cart\"><h3>' + productName + '</h3><p><img src=\"' + productImage + '\" style=\"max-width: 120px;\"/></p><p class=\"product-description\">' + productDesc + '</p><p><span class=\"out-of-stock\">Out of Stock</span></p><hr><p class=\"price\" id=\"' + productID + '_price\">€' + productUnitPrice + '</p><p><span>Qty:</span> <input id=\"' + productID + '_input\" class=\"qty\" type=\"text\" value=\"1\" oninput=\"updateProductPrice(' + productID + ');\"> </p><button class=\"button expanded\" onclick=\"updateBasket(' + productID + ');\">Add to Cart</button></div></div>';   
                                     }
                                 },
                                 error: function(data) {}

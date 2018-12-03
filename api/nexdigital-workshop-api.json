@@ -433,7 +433,11 @@
         "nb_stock": {
           "type": "number",
           "example": "2000"
-        }         
+        },
+        "image_uri": {
+          "type": "string",
+          "example": "https://nexdigital.fr/api/image/my-product.png"
+        }
       }
     },
     "create_product_response": {
@@ -463,7 +467,11 @@
         "nb_stock": {
           "type": "number",
           "example": "2000"
-        }         
+        },
+        "image_uri": {
+          "type": "string",
+          "example": "https://nexdigital.fr/api/image/my-product.png"
+        }
       }
     },
     "update_product_request": {
@@ -480,6 +488,10 @@
         "nb_stock": {
           "type": "number",
           "example": "1500"
+        },
+        "image_uri": {
+          "type": "string",
+          "example": "https://nexdigital.fr/api/image/my-product.png"
         }         
       }
     },
