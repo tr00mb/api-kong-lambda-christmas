@@ -10,7 +10,7 @@ In name, put getAllProducts
 In runtime, put Pyhton 3.7
 For role choose the DynamoLambda existing role
 
-In the lambda_function.py, copy paste the content of getAllProducts.py from lambda-functions/getAllProducts/
+In the lambda_function.py, copy paste the content of getAllProducts.py from [the lambda function directory](./getAllProducts/)
 In Environnement variable enter :
 
 
