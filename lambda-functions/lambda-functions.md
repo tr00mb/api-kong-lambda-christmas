@@ -13,10 +13,6 @@ For role choose the DynamoLambda existing role
 In the lambda_function.py, copy paste the content of getAllProducts.py from [the lambda function directory](./getAllProducts/)
 In Environnement variable enter :
 
-
-## function createProducts
-## function getAllProducts
 ## function getProductDetails
-## function updateExistingProduct
-## function deleteExistingProduct
+
 ## function createDeliveriesForAddress
