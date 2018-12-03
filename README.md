@@ -6,6 +6,8 @@ Kong act as a poweful and flexible API gateway. You can use kong communauty edit
 
 ## Step one: setup lambda functions
 
+[setup lambda functions](./lambda-functions/lambda-functions.md)
+
 ## Step two: kong installation and configuration
 
 ## Step three: install the web front-end
