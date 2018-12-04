@@ -24,7 +24,8 @@ KEY = 'my_image_in_s3.jpg' # r object key
 s3 = boto3.resource('s3')
 
 def lambda_handler(event, context):
-   pass
+    scan_table(DYNAMODB_TABLE_NAME,None,None)
+   
 
 def scan_table(table_name, filter_key=None, filter_value=None):
     """
@@ -57,4 +58,4 @@ def query_s3_for_image(response):
                 raise
 
 
-#scan_table(DYNAMODB_TABLE_NAME,None,None)
+scan_table(DYNAMODB_TABLE_NAME,None,None)

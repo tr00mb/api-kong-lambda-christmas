@@ -20,7 +20,7 @@ dynamodb = boto3.resource('dynamodb',DYNAMODB_REGION)
 
 
 def lambda_handler(event, context):
-   pass
+    add_item(DYNAMODB_TABLE_NAME,None)
 
 
 def add_item(table_name, col_dict):

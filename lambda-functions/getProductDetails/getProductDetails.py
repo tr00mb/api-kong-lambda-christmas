@@ -18,6 +18,8 @@ DYNAMODB_TABLE_NAME ="api_days_calcul_distance"
 os.environ["AWS_DEFAULT_REGION"] = "eu-west-3"
 dynamodb = boto3.resource('dynamodb',DYNAMODB_REGION)
 
+def lambda_handler(event, context):
+    query_table(DYNAMODB_TABLE_NAME,'id','iamge_url')
 
 def query_table(table_name, filter_key=None, filter_value=None):
     """
@@ -34,4 +36,3 @@ def query_table(table_name, filter_key=None, filter_value=None):
     print(response)
     return response
 
-#query_table(DYNAMODB_TABLE_NAME,'id','photo')

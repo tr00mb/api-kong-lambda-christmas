@@ -21,7 +21,7 @@ dynamodb = boto3.resource('dynamodb',DYNAMODB_REGION)
 
 
 def lambda_handler(event, context):
-   pass
+   delete_item(DYNAMODB_TABLE_NAME,None,None)
 
 def delete_item(table_name, pk_name, pk_value):
     """
