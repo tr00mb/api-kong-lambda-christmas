@@ -30,7 +30,6 @@ def priceCalculation(distance):
     return shipping_price
 
 def getPriceandDistance(shipping_address):
-    distanceCalc(shipping_address)
     distanceValue = distanceCalc(shipping_address)
     price = priceCalculation(distanceValue)
     print("distance %s Price %s",(distanceValue,price))
