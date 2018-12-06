@@ -2,12 +2,10 @@ import os
 import json
 import requests
 
-PRICE_KM=1.5
 KEY = os.environ["MQ_APIKEY"]
-
+MQ_URL = os.environ["MQ_URL"]
 WAREHOUSE_ADDRESS = "29+rue+Astorg,Paris,France,75008"
-url = "https://www.mapquestapi.com/directions/v2/route"
-
+PRICE_KM=1.5
 
 def lambda_handler(event, context):
    #shipping_address = event['Records'][0]['address']
@@ -18,7 +16,7 @@ def lambda_handler(event, context):
 # and calculates distance to that point by querying MQ
 def distanceCalc(address):
     payload = { 'key': KEY, 'from': WAREHOUSE_ADDRESS, 'to': address, 'outFormat': 'json' }
-    r = requests.get(url,params=payload)
+    r = requests.get(MQ_URL,params=payload)
     json_data = json.loads(r.text)
     distance  = json_data["route"]["distance"]
     return distance
