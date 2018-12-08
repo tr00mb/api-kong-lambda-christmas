@@ -66,35 +66,54 @@ resource "aws_dynamodb_table_item" "table-items" {
 ITEM
 }
 
-resource "aws_vpc" "default_vpc" {
+resource "aws_vpc" "kong_vpc" {
   cidr_block = "10.0.0.0/16"
-
-  tags {
-    Name = "default"
-  }
-}
-
-resource "aws_subnet" "subnet" {
-  vpc_id     = "${aws_vpc.default_vpc.id}"
-  cidr_block = "10.0.1.0/24"
-}
-
-resource "aws_instance" "instance" {
-  ami                         = "ami-0ba311fb4d24e43b1"
-  source_dest_check           = false
-  instance_type               = "t2.large"
-  subnet_id                   = "${aws_subnet.subnet.id}"
-  associate_public_ip_address = true
 
   tags {
     Name = "kong"
   }
 }
 
-resource "aws_security_group" "allow_all" {
+resource "aws_internet_gateway" "igw" {
+  vpc_id = "${aws_vpc.kong_vpc.id}"
+
+  tags {
+    Name = "kong"
+  }
+}
+
+resource "aws_subnet" "subnet" {
+  vpc_id     = "${aws_vpc.kong_vpc.id}"
+  cidr_block = "10.0.1.0/24"
+}
+
+#####
+
+resource "aws_route_table" "web-public-rt" {
+  vpc_id = "${aws_vpc.kong_vpc.id}"
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${aws_internet_gateway.igw.id}"
+  }
+
+  tags {
+    Name = "Public Subnet RT"
+  }
+}
+
+# Assign the route table to the public Subnet
+resource "aws_route_table_association" "web-public-rt" {
+  subnet_id      = "${aws_subnet.subnet.id}"
+  route_table_id = "${aws_route_table.web-public-rt.id}"
+}
+
+####
+
+resource "aws_security_group" "sg" {
   name        = "allow_all"
   description = "Allow all inbound traffic"
-  vpc_id      = "${aws_vpc.default_vpc.id}"
+  vpc_id      = "${aws_vpc.kong_vpc.id}"
 
   ingress {
     from_port   = 0
@@ -108,7 +127,24 @@ resource "aws_security_group" "allow_all" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
-
-    # prefix_list_ids = ["pl-12c4e678"]
   }
+}
+
+resource "aws_instance" "instance" {
+  ami                         = "ami-0ba311fb4d24e43b1"
+  source_dest_check           = false
+  instance_type               = "t2.large"
+  subnet_id                   = "${aws_subnet.subnet.id}"
+  associate_public_ip_address = true
+
+  # depends_on             = ["${aws_internet_gateway.igw.id}"]
+  vpc_security_group_ids = ["${aws_security_group.sg.id}"]
+
+  tags {
+    Name = "kong"
+  }
+}
+
+output "ec2_global_ips" {
+  value = ["${aws_instance.instance.*.public_ip}"]
 }
