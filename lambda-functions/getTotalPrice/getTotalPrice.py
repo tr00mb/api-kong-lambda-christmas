@@ -16,24 +16,26 @@ client = boto3.client('lambda')
 #Get ARN of lambda to call
 invoked_function_arn = ""
 
-#Event to send to invoke lambda
+#Event to send to invoke lambda getShippingPrice
 event_to_send =""
 
 def lambda_handler(event, context):
-    #get distance and shipping_price in the json sending
-    distance = event['distance']
-    shippingPrice = event['shipping_price']
+    
+    #prix du panier transmis en parametre et recupéré dans l'event
+    prix_panier = event['price_of_shopping_cart']
 
-    #invocation de la lambda qui renvoit le prix et la distance 
+    #invocation de la lambda qui renvoit le prix 
     called_function = context.invoked_function_arn
     response = client.invoke(
         FunctionName=called_function,
         InvocationType='RequestResponse',
         Payload=bytes(json.dumps(event_to_send))
     )
+    data = response['Payload'].read()
     data = json.loads(response['Payload'].read().decode())
-    Total_price = data['Total_price']
+    shippingPrice = data['shipping_price']
 
-    return distance,shippingPrice,Total_price
-
+    #somme des deux prix
+    Total_price = shippingPrice + prix_panier
+    return Total_price
 

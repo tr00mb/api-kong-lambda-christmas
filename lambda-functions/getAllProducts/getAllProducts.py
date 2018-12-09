@@ -37,10 +37,10 @@ def scan_table(table_name, filter_key=None, filter_value=None):
     if filter_key and filter_value:
         filtering_exp = Key(filter_key).eq(filter_value)
         response = table.scan(FilterExpression=filtering_exp)
-        query_s3_for_image(response)
+        #query_s3_for_image(response)
     else:
         response = table.scan()
-        query_s3_for_image(response)   
+        #query_s3_for_image(response)   
     print(response)
     return response
 
@@ -50,7 +50,7 @@ def query_s3_for_image(response):
         try:
             Key(BUCKET_NAME)
             s3.Bucket(BUCKET_NAME).download_file(Key, image_url)
-            print('Nom : %s , Libelle : %s , prix : %d ,image_produit' %(i['nom'],['libelle'],['prix'],['image_url']))
+            #print("Nom : %s , Libelle : %s , prix : %d ,image_produit" %(i['nom'],i['libelle'],i['prix'],i['image_url']))
         except botocore.exceptions.ClientError as e:
             if e.response['Error']['Code'] == "404":
                 print("The object does not exist.")
