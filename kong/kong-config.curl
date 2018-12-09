@@ -1,5 +1,11 @@
-kong_admin=35.180.86.231:8001
-export kong_admin
+# vim: filetype=sh
+#
+
+
+kong_admin=***IP/URL***:8001
+aws_key=***KEY***
+aws_secret=***SECRET***
+aws_region=eu-west-2
 
 #create generic products service
 curl -X POST --url http://$kong_admin/services --data 'name=products' --data 'url=http://aws-lambda'
@@ -17,4 +23,3 @@ curl -X POST --url http://$kong_admin/services --data 'name=deliveries' --data '
 
 #create a route for POST deliveries
 curl -X POST --url http://$kong_admin/services/deliveries/routes --data 'methods[]=POST' --data 'paths[]=/deliveries'
-
