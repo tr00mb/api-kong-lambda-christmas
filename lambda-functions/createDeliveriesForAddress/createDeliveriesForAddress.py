@@ -14,36 +14,25 @@ logger.setLevel(logging.INFO)
 client = boto3.client('lambda')
 
 #Get ARN of lambda to call
-invoked_function_arn1 = ""
-invoked_function_arn2 =""
+invoked_function_arn = ""
 
 #Event to send to invoke lambda
-event_to_send1 =""
-event_to_send2 =""
-
+event_to_send =""
 
 def lambda_handler(event, context):
-    #invocation de la lambda qui renvoit le prix et la distance 
-    called_function1 = context.invoked_function_arn1
-    response = client.invoke(
-        FunctionName=called_function1,
-        InvocationType='RequestResponse',
-        Payload=bytes(json.dumps(event_to_send1))
-    )
-    data1 = json.loads(response['Payload'].read().decode())
-    distance = data1['distance']
-    shippingPrice = data1['shipping_price']
+    #get distance and shipping_price in the json sending
+    distance = event['distance']
+    shippingPrice = event['shipping_price']
 
-    
-    #invocation de la lambda qui renvoit le prix total
-    called_function2 = context.invoked_function_arn2
+    #invocation de la lambda qui renvoit le prix et la distance 
+    called_function = context.invoked_function_arn
     response = client.invoke(
-        FunctionName=called_function2,
+        FunctionName=called_function,
         InvocationType='RequestResponse',
-        Payload=bytes(json.dumps(event_to_send2))
+        Payload=bytes(json.dumps(event_to_send))
     )
-    data2 = json.loads(response['Payload'].read().decode())
-    Total_price = data2['Total_price']
+    data = json.loads(response['Payload'].read().decode())
+    Total_price = data['Total_price']
 
     return distance,shippingPrice,Total_price
 
