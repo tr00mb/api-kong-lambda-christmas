@@ -22,7 +22,7 @@ dynamodb = boto3.resource('dynamodb',DYNAMODB_REGION)
 def lambda_handler(event, context):
     #get product_id from path of api url
     #product_id= event['pathParameters']['product_id']
-    product_id = event['params']['querystring']['token']
+    product_id = event['params']['querystring']['product_id']
     #query table with this parameters getting
     query_table(DYNAMODB_TABLE_NAME,'id',product_id)
  
