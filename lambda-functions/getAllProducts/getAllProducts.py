@@ -40,7 +40,7 @@ def scan_table(table_name, filter_key=None, filter_value=None):
         #query_s3_for_image(response)
     else:
         response = table.scan()
-        query_s3_for_image(response)   
+        #query_s3_for_image(response)   
     print(response)
     return response
 
