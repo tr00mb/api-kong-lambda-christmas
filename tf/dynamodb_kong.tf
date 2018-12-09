@@ -66,6 +66,37 @@ resource "aws_dynamodb_table_item" "table-items" {
 ITEM
 }
 
+resource "random_id" "random_id" {
+  byte_length = 12
+}
+
+resource "aws_s3_bucket" "kong_bucket" {
+  bucket        = "kong-bucket-${random_id.random_id.hex}"
+  acl           = "public-read"
+  force_destroy = true
+
+  website {
+    index_document = "index.html"
+  }
+
+  tags {
+    Name = "Kong"
+  }
+}
+
+data "template_file" "s3_template" {
+  template = "${file("s3_policy.json")}"
+
+  vars {
+    bucket_arn = "${aws_s3_bucket.kong_bucket.arn}"
+  }
+}
+
+resource "aws_s3_bucket_policy" "kong_bucket_policy" {
+  bucket = "${aws_s3_bucket.kong_bucket.id}"
+  policy = "${data.template_file.s3_template.rendered}"
+}
+
 resource "aws_vpc" "kong_vpc" {
   cidr_block = "10.0.0.0/16"
 
@@ -147,4 +178,16 @@ resource "aws_instance" "instance" {
 
 output "ec2_global_ips" {
   value = ["${aws_instance.instance.*.public_ip}"]
+}
+
+output "s3_bucket_id" {
+  value = ["${aws_s3_bucket.kong_bucket.id}"]
+}
+
+output "s3_website_url" {
+  value = ["${aws_s3_bucket.kong_bucket.website_endpoint}"]
+}
+
+output "s3_arn" {
+  value = ["${aws_s3_bucket.kong_bucket.arn}"]
 }
