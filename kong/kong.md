@@ -22,7 +22,7 @@ Then, different plugins, such as security, traffic control or serverless call ca
 When calling aws lambda functions, there is no upstreams service that are called. However we still need to set up services.
 One choice is to implement logical services and configure one route per lambda function.
 
-In our case, we well setup a products service with the differents route for GET /products,  GET /products/{product_id} and a deliveries service with only one route POST /deliveries
+In our case, we well setup a products service with the differents route for GET /workshop/products,  GET /workshop/products/{product_id} and a deliveries service with only one route POST /workshop/commands
 
 ### mapquest
 We need also to proxy the access to mapquest.
