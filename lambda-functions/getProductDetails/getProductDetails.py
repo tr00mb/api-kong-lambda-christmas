@@ -12,23 +12,24 @@ from boto3 import client
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-#DynamodDB table name and region 
+#DynamodDB table name and region
 DYNAMODB_REGION = "eu-west-3"
-DYNAMODB_TABLE_NAME ="api_days_calcul_distance"
+DYNAMODB_TABLE_NAME ="kong"
 
 os.environ["AWS_DEFAULT_REGION"] = "eu-west-3"
 dynamodb = boto3.resource('dynamodb',DYNAMODB_REGION)
 
 def lambda_handler(event, context):
     #get product_id from path of api url
-    #product_id= event['pathParameters']['product_id']
-    product_id = event['params']['querystring']['product_id']
+    product_id = int(event['request_uri'].rsplit('/', 1)[-1])
+    logger.info(product_id)
     #query table with this parameters getting
-    query_table(DYNAMODB_TABLE_NAME,'id',product_id)
- 
+    return query_table(DYNAMODB_TABLE_NAME,'id',product_id)
+
+
 def query_table(table_name, filter_key=None, filter_value=None):
     """
-    Perform a query operation on the table. 
+    Perform a query operation on the table.
     Can specify filter_key (col name) and its value to be filtered.
     """
     table = dynamodb.Table(table_name)
@@ -40,4 +41,3 @@ def query_table(table_name, filter_key=None, filter_value=None):
         response = table.query()
     print(response)
     return response
-
