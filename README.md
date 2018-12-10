@@ -12,6 +12,9 @@ Setup of the application S3
 
 [setup lambda functions](./lambda-functions/lambda-functions.md)
 
-## Step three: kong installation and configuration
+## Step three: kong configuration
+
+[configure kong](./kong/kong.md)
 
 ## Step for: install the web front-end
+
