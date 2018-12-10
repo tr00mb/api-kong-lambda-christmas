@@ -31,7 +31,6 @@ def lambda_handler(event, context):
         InvocationType='RequestResponse',
         Payload=bytes(json.dumps(event_to_send))
     )
-    data = response['Payload'].read()
     data = json.loads(response['Payload'].read().decode())
     shippingPrice = data['shipping_price']
 

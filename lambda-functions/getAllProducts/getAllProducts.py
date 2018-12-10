@@ -5,8 +5,9 @@ import boto3
 import botocore
 import logging
 import uuid
+import boto3
 from boto3.dynamodb.conditions import Key, Attr
-from boto.s3.key import Key
+
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -56,6 +57,3 @@ def query_s3_for_image(response):
                 print("The object does not exist.")
             else:
                 raise
-
-
-scan_table(DYNAMODB_TABLE_NAME,None,None)
