@@ -21,7 +21,7 @@ curl -X POST --url http://$kong_admin/services/products/routes --data 'methods[]
 curl -X POST --url http://$kong_admin/services --data 'name=deliveries' --data 'url=http://aws-lambda'
 
 #create a route for POST deliveries
-curl -X POST --url http://$kong_admin/services/deliveries/routes --data 'methods[]=POST' --data 'paths[]=/workshop/commands'
+curl -X POST --url http://$kong_admin/services/deliveries/routes --data 'methods[]=POST' --data 'methods[]=OPTIONS' --data 'paths[]=/workshop/commands'
 
 #create aws-lambda plugin to target the aws-lambda functions from the routes
 ## get the route ids from products service (one id for /products and one id for /products/\S+)
@@ -59,3 +59,10 @@ curl -X POST $kong_admin/routes/{route_id}/plugins \
 --data "config.function_name=createNewCommand"
 
 ##Ajouter le plugin CORS sur les services suivant le mode déploiement du front end
+curl -X POST http://kong:8001/services/products/plugins \
+    --data "name=cors"  \
+    --data "config.origins=*"
+
+curl -X POST http://kong:8001/services/deliveries/plugins \
+    --data "name=cors"  \
+    --data "config.origins=*"
