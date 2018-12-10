@@ -66,3 +66,9 @@ curl -X POST http://kong:8001/services/products/plugins \
 curl -X POST http://kong:8001/services/deliveries/plugins \
     --data "name=cors"  \
     --data "config.origins=*"
+
+#create the service to MapQuest
+curl -X POST --url http://$kong_admin/services --data 'name=mapQuest' --data 'url=http://www.mapquestapi.com/directions/v2/route'
+
+#create the route to target the service
+curl -X POST --url http://$kong_admin/services/mapQuest/routes --data 'methods[]=GET' --data 'paths[]=/distances'
