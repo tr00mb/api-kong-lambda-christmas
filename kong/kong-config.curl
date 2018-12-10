@@ -11,8 +11,8 @@ aws_region=eu-west-2
 curl -X POST --url http://$kong_admin/services --data 'name=products' --data 'url=http://aws-lambda'
 
 #create different routes to be able to have different aws-lambda call on each route
-curl -X POST --url http://$kong_admin/services/products/routes --data 'methods[]=GET' --data 'paths[]=/products'
-curl -X POST --url http://$kong_admin/services/products/routes --data 'methods[]=GET' --data 'paths[]=/products/\S+'
+curl -X POST --url http://$kong_admin/services/products/routes --data 'methods[]=GET' --data 'paths[]=/workshop/products'
+curl -X POST --url http://$kong_admin/services/products/routes --data 'methods[]=GET' --data 'paths[]=/workshop/products/\S+'
 #curl -X POST --url http://$kong_admin/services/products/routes --data 'methods[]=POST' --data 'paths[]=/products'
 #curl -X POST --url http://$kong_admin/services/products/routes --data 'methods[]=PUT' --data-urlencode 'paths[]=/products/\S+'
 #curl -X POST --url http://$kong_admin/services/products/routes --data 'methods[]=DELETE' --data-urlencode 'paths[]=/products/\S+'
@@ -21,14 +21,13 @@ curl -X POST --url http://$kong_admin/services/products/routes --data 'methods[]
 curl -X POST --url http://$kong_admin/services --data 'name=deliveries' --data 'url=http://aws-lambda'
 
 #create a route for POST deliveries
-curl -X POST --url http://$kong_admin/services/deliveries/routes --data 'methods[]=POST' --data 'paths[]=/deliveries'
+curl -X POST --url http://$kong_admin/services/deliveries/routes --data 'methods[]=POST' --data 'paths[]=/workshop/commands'
 
 #create aws-lambda plugin to target the aws-lambda functions from the routes
 ## get the route ids from products service (one id for /products and one id for /products/\S+)
 curl $kong_admin/services/products/routes
 
-#/products
-curl $kong_admin/services/products/routes
+###/products
 curl -X POST $kong_admin/routes/{route_id}/plugins \
 --data "name=aws-lambda" \
 --data-urlencode "config.aws_key=$aws_key" \
@@ -37,8 +36,7 @@ curl -X POST $kong_admin/routes/{route_id}/plugins \
 --data "config.unhandled_status=400" \
 --data "config.function_name=getAllProducts"
 
-#/products/\S+
-curl $kong_admin/services/products/routes
+###/products/\S+
 curl -X POST $kong_admin/routes/{route_id}/plugins \
 --data "name=aws-lambda" \
 --data-urlencode "config.aws_key=$aws_key" \
@@ -47,3 +45,17 @@ curl -X POST $kong_admin/routes/{route_id}/plugins \
 --data "config.forward_request_uri=true" \
 --data "config.unhandled_status=400" \
 --data "config.function_name=getProductDetails"
+
+## get the route ids from products service (one id for /products and one id for /products/\S+)
+curl $kong_admin/services/deliveries/routes
+###/commands
+curl -X POST $kong_admin/routes/{route_id}/plugins \
+--data "name=aws-lambda" \
+--data-urlencode "config.aws_key=$aws_key" \
+--data-urlencode "config.aws_secret=$aws_secret" \
+--data "config.aws_region=$aws_region" \
+--data "config.forward_request_body=true" \
+--data "config.unhandled_status=400" \
+--data "config.function_name=createNewCommand"
+
+##Ajouter le plugin CORS sur les services suivant le mode déploiement du front end
