@@ -24,7 +24,7 @@ s3 = boto3.resource('s3')
 
 def lambda_handler(event, context):
 
-    return scan_table(DYNAMODB_TABLE_NAME,None,None)
+    return scan_table(DYNAMODB_TABLE_NAME,None,None)['Items']
 
 
 def scan_table(table_name, filter_key=None, filter_value=None):

@@ -21,10 +21,10 @@ dynamodb = boto3.resource('dynamodb',DYNAMODB_REGION)
 
 def lambda_handler(event, context):
     #get product_id from path of api url
-    product_id = int(event['request_uri'].rsplit('/', 1)[-1])
+    product_id = int(float(event['request_uri'].rsplit('/', 1)[-1]))
     logger.info(product_id)
     #query table with this parameters getting
-    return query_table(DYNAMODB_TABLE_NAME,'id',product_id)
+    return query_table(DYNAMODB_TABLE_NAME,'id',product_id)['Items']
 
 
 def query_table(table_name, filter_key=None, filter_value=None):
