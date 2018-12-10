@@ -2,7 +2,6 @@ import os
 import sys
 import json
 import boto3
-import botocore
 import logging
 import uuid
 import boto3
@@ -12,21 +11,22 @@ from boto3.dynamodb.conditions import Key, Attr
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-#DynamodDB table name and region 
+#DynamodDB table name and region
 DYNAMODB_REGION = "eu-west-3"
-DYNAMODB_TABLE_NAME ="api_days_calcul_distance"
+DYNAMODB_TABLE_NAME ="kong"
 
 os.environ["AWS_DEFAULT_REGION"] = "eu-west-3"
 dynamodb = boto3.resource('dynamodb',DYNAMODB_REGION)
 
-#Bucket s3 
+#Bucket s3
 BUCKET_NAME = 'my-bucket' # image bucket name
 KEY = 'my_image_in_s3.jpg' # r object key
 s3 = boto3.resource('s3')
 
 def lambda_handler(event, context):
-    scan_table(DYNAMODB_TABLE_NAME,None,None)
-   
+
+    return scan_table(DYNAMODB_TABLE_NAME,None,None)['Items']
+
 
 def scan_table(table_name, filter_key=None, filter_value=None):
     """
@@ -41,7 +41,7 @@ def scan_table(table_name, filter_key=None, filter_value=None):
         #query_s3_for_image(response)
     else:
         response = table.scan()
-        #query_s3_for_image(response)   
+        #query_s3_for_image(response)
     print(response)
     return response
 
@@ -57,3 +57,9 @@ def query_s3_for_image(response):
                 print("The object does not exist.")
             else:
                 raise
+<<<<<<< HEAD
+=======
+
+
+scan_table(DYNAMODB_TABLE_NAME,None,None)
+>>>>>>> 6901d1fc95c4312ef2f14faa6fbeb3ce709d7698

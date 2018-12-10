@@ -8,9 +8,9 @@ WAREHOUSE_ADDRESS = "29+rue+Astorg,Paris,France,75008"
 PRICE_KM=1.5
 
 def lambda_handler(event, context):
-   #shipping_address = event['Records'][0]['address']
-   #getPriceandDistance(shipping_address)
-   pass
+   shipping_address = event['Records'][0]['address']
+   return getPriceandDistance(shipping_address)
+   #pass
 
 # def get as parameter the location
 # and calculates distance to that point by querying MQ
