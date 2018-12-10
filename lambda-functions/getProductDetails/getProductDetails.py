@@ -15,6 +15,7 @@ logger.setLevel(logging.INFO)
 #DynamodDB table name and region
 DYNAMODB_REGION = "eu-west-3"
 DYNAMODB_TABLE_NAME ="kong"
+IMG_BUCKET=os.environ['IMG_BUCKET']
 
 os.environ["AWS_DEFAULT_REGION"] = "eu-west-3"
 dynamodb = boto3.resource('dynamodb',DYNAMODB_REGION)
@@ -24,7 +25,7 @@ def lambda_handler(event, context):
     product_id = int(float(event['request_uri'].rsplit('/', 1)[-1]))
     logger.info(product_id)
     #query table with this parameters getting
-    return query_table(DYNAMODB_TABLE_NAME,'id',product_id)['Items'][0]
+    return query_table(DYNAMODB_TABLE_NAME,'id',product_id)
 
 
 def query_table(table_name, filter_key=None, filter_value=None):
@@ -39,5 +40,16 @@ def query_table(table_name, filter_key=None, filter_value=None):
         response = table.query(KeyConditionExpression=filtering_exp)
     else:
         response = table.query()
-    print(response)
-    return response
+
+    item=response['Items'][0]
+    logger.info(item)
+    api_item={}
+    api_item['id']=item['id']
+    api_item['name']=item['nom']
+    api_item['description']=item['libelle']
+    api_item['image_uri']=IMG_BUCKET+item['image_url']
+    api_item['nb_stock']='134'
+    api_item['unit_price']=item['prix']
+    logger.info(api_item)
+
+    return api_item

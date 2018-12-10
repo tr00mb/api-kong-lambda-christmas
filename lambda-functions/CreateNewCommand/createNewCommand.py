@@ -21,8 +21,8 @@ def lambda_handler(event, context):
         logger.info(product['quantity'])
         headers = {"content-type": "application/json"}
         getDetail = requests.get(API_URL+'/workshop/products/'+str(product['id']), headers=headers)
-        logger.info(getDetail.json()['prix'])
-        sum_price = (float(product['quantity']) * (getDetail.json()['prix']))+sum_price
+        logger.info(getDetail.json()['unit_price'])
+        sum_price = (float(product['quantity']) * (getDetail.json()['unit_price']))+sum_price
 
     distance = distanceCalc(address)
     delivery_cost = priceCalculation(distance)
