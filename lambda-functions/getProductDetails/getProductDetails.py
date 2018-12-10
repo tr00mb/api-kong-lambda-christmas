@@ -24,7 +24,7 @@ def lambda_handler(event, context):
     product_id = int(float(event['request_uri'].rsplit('/', 1)[-1]))
     logger.info(product_id)
     #query table with this parameters getting
-    return query_table(DYNAMODB_TABLE_NAME,'id',product_id)['Items']
+    return query_table(DYNAMODB_TABLE_NAME,'id',product_id)['Items'][0]
 
 
 def query_table(table_name, filter_key=None, filter_value=None):
