@@ -1,5 +1,5 @@
 resource "aws_instance" "instance" {
-  ami                         = "ami-0ba311fb4d24e43b1"
+  ami                         = "ami-0fde5bdbf377cb447"
   source_dest_check           = false
   instance_type               = "t2.medium"
   subnet_id                   = "${aws_subnet.subnet.id}"
