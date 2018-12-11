@@ -50,7 +50,7 @@ resource "aws_dynamodb_table_item" "table-items"{
 ITEM
 }
 
-resource "aws_dynamodb_table_item" "table-items"{
+resource "aws_dynamodb_table_item" "table-items4"{
   table_name = "${aws_dynamodb_table.kong-dynamodb-table.name}"
   hash_key   = "${aws_dynamodb_table.kong-dynamodb-table.hash_key}"
   item       = <<ITEM
@@ -64,7 +64,7 @@ resource "aws_dynamodb_table_item" "table-items"{
 ITEM
 }
 
-resource "aws_dynamodb_table_item" "table-items"{
+resource "aws_dynamodb_table_item" "table-items3"{
   table_name = "${aws_dynamodb_table.kong-dynamodb-table.name}"
   hash_key   = "${aws_dynamodb_table.kong-dynamodb-table.hash_key}"
   item       = <<ITEM
@@ -78,7 +78,7 @@ resource "aws_dynamodb_table_item" "table-items"{
 ITEM
 }
 
-resource "aws_dynamodb_table_item" "table-items"{
+resource "aws_dynamodb_table_item" "table-items2"{
   table_name = "${aws_dynamodb_table.kong-dynamodb-table.name}"
   hash_key   = "${aws_dynamodb_table.kong-dynamodb-table.hash_key}"
   item       = <<ITEM
@@ -92,7 +92,7 @@ resource "aws_dynamodb_table_item" "table-items"{
 ITEM
 }
 
-resource "aws_dynamodb_table_item" "table-items"{
+resource "aws_dynamodb_table_item" "table-items1"{
   table_name = "${aws_dynamodb_table.kong-dynamodb-table.name}"
   hash_key   = "${aws_dynamodb_table.kong-dynamodb-table.hash_key}"
   item       = <<ITEM
@@ -101,7 +101,7 @@ resource "aws_dynamodb_table_item" "table-items"{
 "nom": { "S" : "Game" },
 "libelle": { "S" : "Video Game"},
 "prix": { "N" : "50" },
-"image_url": { "S" :"videoGame.png" }
+"iAmage_url": { "S" :"videoGame.png" }
  }
 ITEM
 }
