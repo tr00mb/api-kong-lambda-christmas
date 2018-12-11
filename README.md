@@ -25,5 +25,6 @@ AWS lambda function to get a product detail
 ## Step four: put an order request
 
 AWS lambda function to request for an order
-Setup kong to expose a route and call the aws lambda function
+<br/>Setup kong to expose a route and call the aws lambda function
+<br/>[Step four](./workshop/step4/step4.md)
 
