@@ -2,7 +2,31 @@
 
 ## aws lambda function
 
-Create the getAllProducts function. (refer to the doc (ref))
+Create the getAllProducts function.
+Create a new function, Author from scratch
+- Name
+getAllProducts
+- Runtime
+Python 3.7
+- Role -> Choose an existing role
+lambda-dynamo-execution-role
+- Select the function in the configuration panel
+- Below you’ll find the code panel, copy the content of
+api-kong-lambda-christmas/lambda-functions/getAllProducts.py file
+
+
+## create a user to execute the lambda function from kong plugin
+In the AWS console’s Services tab, click IAM under Security, Identity & Compliance, and
+then click Roles from the left navigation menu.
+- Click Create User
+- Next, set the user name and select as access type only Programmatic access as shown
+below
+Then, we need to attach the permissions for this user
+- Select Attach existing policies directly
+- And select AWSLambdaFullAccess
+- Click Next and then Create user
+You should see a Success message
+- Download the .csv file and save it somewhere safe. You will need to configure kong aws-lambda plugin.
 
 ## create service, route and lambda plugin in kong
 
@@ -11,13 +35,9 @@ Do no hesitate to read [kong configuration](../../kong/kond.md) to understand th
 
 ```
 kong_admin=***IP/URL***:8001
-aws_key=***KEY***
-aws_secret=***SECRET***
-aws_region=eu-west-2
 
 #create generic products service
 curl -X POST --url http://$kong_admin/services --data 'name=products' --data 'url=http://aws-lambda'
-
 
 #create different routes to be able to have different aws-lambda call on each route
 curl -X POST --url http://$kong_admin/services/products/routes --data 'methods[]=GET' --data 'paths[]=/workshop/products'
@@ -25,7 +45,13 @@ curl -X POST --url http://$kong_admin/services/products/routes --data 'methods[]
 
 Then we have to add a plugin to the route (/workshop/products). To do it you have to use the route_id from the created route. Either you still have it on your screen, or you can curl $kong_admin/services/products/routes to retrieve the id
 
+aws_key, aws_secret are the ones from the user that was created in "create a user to execute the lambda function from kong plugin"
+
 ```
+aws_key=***KEY***
+aws_secret=***SECRET***
+aws_region=eu-west-2
+
 ###/products
 curl -X POST $kong_admin/routes/{route_id}/plugins \
 --data "name=aws-lambda" \
@@ -34,7 +60,6 @@ curl -X POST $kong_admin/routes/{route_id}/plugins \
 --data "config.aws_region=$aws_region" \
 --data "config.unhandled_status=400" \
 --data "config.function_name=getAllProducts"
-
 ```
 
 
