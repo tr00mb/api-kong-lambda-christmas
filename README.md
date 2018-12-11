@@ -6,13 +6,14 @@ Kong act as a poweful and flexible API gateway. You can use kong communauty edit
 ## Step one: Setup  environment
 
 Setup Dynamo DB for the application
-Setup S3 for image storage and web site storage
-Setup kong EC2 instance
+<br/>Setup S3 for image storage and web site storage
+<br/>Setup kong EC2 instance
 
 ## Step two: get products fonction
 
 AWS lamdba fonction to get the products list (id and name)
 Setup kong to expose a route and call the aws lambda function
+[step two](./workshop/step2/step2.md)
 
 ## Step three: get product details function 
 
