@@ -37,5 +37,7 @@ curl -X POST $kong_admin/routes/{route_id}/plugins \
 
 
 ## test the API
-kong_api=IPKONG:8000
+```
+kong_api=***IP/URL***:8000
 curl $kong_api/workshop/products
+```
