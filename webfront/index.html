@@ -1,150 +1,157 @@
 <!doctype html>
 <html class="no-js" lang="fr">
+  <head>
+    <title>Workshop API</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="author" content="nexDigital">
+    <meta name="copyright" content="nexDigital 2018 © All rights reserved">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
 
-<head>
-  <title>Workshop API</title>
-  <meta charset="UTF-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="author" content="nexDigital">
-  <meta name="copyright" content="nexDigital 2018 © All rights reserved">
-  <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/general.css">
-  <link rel="stylesheet" href="css/fonts.min.css">
-  <link rel="stylesheet" href="css/foundation.min.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
-  <script src="js/jquery-3.3.1.min.js"></script>
-  <script src="js/foundation.min.js"></script>
-  <script src="js/typed.js"></script>
-  <script type="text/javascript">
-    var API_PLATFORM_URL = "http://35.180.196.52:8000";
-    var API_PRODUCTS = API_PLATFORM_URL + '/workshop/products';
-    var API_COMMANDS = API_PLATFORM_URL + '/workshop/commands';
-  </script>
-  <script async type="text/javascript">
-    function getProductsList() {
-      $.ajax({
-        url: API_PRODUCTS,
-        type: 'GET',
-        dataType: 'json',
-        timeout: 30000,
-        success: function(json) {
-          for (var i = 0; i < json.length; i++) {
-            var productID = json[i].id;
-            $.ajax({
-              url: API_PRODUCTS + '/' + productID,
-              type: 'GET',
-              dataType: 'json',
-              timeout: 30000,
-              success: function(json) {
-                var productName = json.name;
-                var productUnitPrice = json.unit_price;
-                var productNbStock = json.nb_stock;
-                var productDesc = json.description;
-                var productImage = json.image_uri;
-                if (productNbStock > 0) {
-                  document.getElementById("products-catalog").innerHTML = '<div id="' + productID + '" class="product-details column center-text-for-small-only"><div class="product-details-add-to-cart"><h3>' + productName +
-                    '</h3><p><img src="' + productImage + '" style="max-width: 120px;"/></p><p class="product-description">' + productDesc + '</p><p><span class="in-stock">In Stock</span> <span class="dim-text">(Only ' + productNbStock +
-                    ' left in Stock)</span></p><hr><p class="price" id="' + productID + '_price">€' + productUnitPrice + '</p><p><span>Qty:</span> <input id="' + productID +
-                    '_input" class="qty" type="text" value="1" oninput="updateProductPrice(' + productID + ');"> </p><button class="button expanded" onclick="updateBasket(' + productID + ');">Add to Cart</button></div></div>';
-                } else {
-                  document.getElementById("products-catalog").innerHTML = '<div id="' + productID + '" class="product-details column center-text-for-small-only"><div class="product-details-add-to-cart"><h3>' + productName +
-                    '</h3><p><img src="' + productImage + '" style="max-width: 120px;"/></p><p class="product-description">' + productDesc + '</p><p><span class="out-of-stock">Out of Stock</span></p><hr><p class="price" id="' + productID +
-                    '_price">€' + productUnitPrice + '</p><p><span>Qty:</span> <input id="' + productID + '_input" class="qty" type="text" value="1" oninput="updateProductPrice(' + productID +
-                    ');"> </p><button class="button expanded" onclick="updateBasket(' + productID + ');">Add to Cart</button></div></div>';
-                }
-              },
-              error: function(data) {}
-            });
-          }
-        },
-        error: function(data) {}
-      });
-    }
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href="css/fonts.min.css">
+    <link rel="stylesheet" href="css/foundation.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
 
-    function updateProductPrice(productID) {
-      var nbProduct = document.getElementById(productID + "_input").value;
-      $.ajax({
-        url: API_PRODUCTS + '/' + productID,
-        type: 'GET',
-        dataType: 'json',
-        timeout: 30000,
-        success: function(json) {
-          var productUnitPrice = json.unit_price;
-          document.getElementById(productID + "_price").innerHTML = '€' + productUnitPrice * nbProduct;
-        },
-        error: function(data) {}
-      });
-    }
+    <script type="text/javascript">
+      var API_PLATFORM_URL = "http://35.180.196.52:8000";
+      var API_PRODUCTS = API_PLATFORM_URL + '/workshop/products';
+      var API_COMMANDS = API_PLATFORM_URL + '/workshop/commands';
+    </script>
 
-    function updateBasket(productID) {
-      if (localStorage.basket != null) {
-        var currentBasket = JSON.parse(localStorage.basket);
-      } else {
-        var currentBasket = [];
-      }
-      var singleProduct = {};
-      var quantity = document.getElementById(productID + "_input").value;
-      singleProduct['id'] = productID;
-      singleProduct['quantity'] = quantity;
-      currentBasket.push(singleProduct);
-      var totalBasketProducts = 0;
-      for (var i = 0; i < currentBasket.length; i++) {
-        totalBasketProducts = totalBasketProducts + Number(currentBasket[i].quantity);
-      }
-      localStorage.basket = JSON.stringify(currentBasket);
-      localStorage.totalBasketProducts = totalBasketProducts;
-      document.getElementById("basket").innerHTML = totalBasketProducts + ' products';
-      updateDeliverySection();
-    }
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/foundation.min.js"></script>
+    <script src="js/typed.js"></script>
 
-    function deliveryProcess() {
-      if (localStorage.totalBasketProducts == null) {
-        localStorage.totalBasketProducts = 0;
-        localStorage.deliveryDistance = "-";
-        localStorage.deliveryCost = "-";
-        localStorage.totalPrice = "-";
-      }
-      if (document.getElementById("delivery_input").value != null && document.getElementById("delivery_input").value != "") {
-        var productsList = JSON.parse(localStorage.basket);
-        var payload = {};
-        payload['address'] = document.getElementById("delivery_input").value;
-        payload['products'] = productsList;
+    <script async type="text/javascript">
+      function getProductsList() {
         $.ajax({
-          url: API_COMMANDS,
-          type: 'POST',
-          headers: {
-            "Content-Type": "application/json"
-          },
+          url: API_PRODUCTS,
+          type: 'GET',
           dataType: 'json',
-          data: JSON.stringify(payload),
           timeout: 30000,
           success: function(json) {
-            localStorage.deliveryDistance = json.distance + "km";
-            localStorage.deliveryCost = "€" + json.delivery_cost;
-            localStorage.totalPrice = "€" + json.total_price;
-            updateDeliverySection();
+            document.getElementById("products-catalog").innerHTML = '';
+
+            for (var i = 0; i < json.length; i++) {
+              var currentID = json[i].id;
+              $.ajax({
+                url: API_PRODUCTS + '/' + currentID,
+                type: 'GET',
+                dataType: 'json',
+                timeout: 30000,
+                success: function(json) {
+                  var productID = json.id;
+                  var productName = json.name;
+                  var productUnitPrice = json.unit_price;
+                  var productNbStock = json.nb_stock;
+                  var productDesc = json.description;
+                  var productImage = json.image_uri;
+
+                  if (productNbStock > 0) {
+                    document.getElementById("products-catalog").innerHTML += '<div id="' + productID + '" class="product-details column center-text-for-small-only"><div class="product-details-add-to-cart"><h3>' + productName +
+                      '</h3><p><img src="' + productImage + '" style="max-width: 120px; max-height: 120px;"/></p><p class="product-description">' + productDesc + '</p><p><span class="in-stock">In Stock</span> <span class="dim-text">(Only ' + productNbStock +
+                      ' left in Stock)</span></p><hr><p class="price" id="' + productID + '_price">€' + productUnitPrice + '</p><p><span>Qty:</span> <input id="' + productID +
+                      '_input" class="qty" type="text" value="1" oninput="updateProductPrice(' + productID + ');"> </p><button class="button expanded" onclick="updateBasket(' + productID + ');">Add to Cart</button></div></div>';
+                  } else {
+                    document.getElementById("products-catalog").innerHTML += '<div id="' + productID + '" class="product-details column center-text-for-small-only"><div class="product-details-add-to-cart"><h3>' + productName +
+                      '</h3><p><img src="' + productImage + '" style="max-width: 120px;"/></p><p class="product-description">' + productDesc + '</p><p><span class="out-of-stock">Out of Stock</span></p><hr><p class="price" id="' + productID +
+                      '_price">€' + productUnitPrice + '</p><p><span>Qty:</span> <input id="' + productID + '_input" class="qty" type="text" value="1" oninput="updateProductPrice(' + productID +
+                      ');"> </p><button class="button expanded" onclick="updateBasket(' + productID + ');">Add to Cart</button></div></div>';
+                  }
+                },
+                error: function(data) {}
+              });
+            }
           },
-          error: function(data) {
-            localStorage.deliveryDistance = "-";
-            localStorage.deliveryCost = "-";
-            localStorage.totalPrice = "-";
-          }
+          error: function(data) {}
         });
       }
-      updateDeliverySection();
-    }
 
-    function updateDeliverySection() {
-      document.getElementById("deliveryProcess").innerHTML = '<div class="card-profile-stats-statistic"><span class="stat">' + localStorage.totalBasketProducts +
-        '</span><p>Nb products</p></div><div class="card-profile-stats-statistic"><span class="stat">' + localStorage.deliveryDistance + '</span><p>Distance</p></div><div class="card-profile-stats-statistic"><span class="stat">' + localStorage.deliveryCost +
-        '</span><p>Delivery cost</p></div><div class="card-profile-stats-statistic"><span class="stat">' + localStorage.totalPrice + '</span><p>Total price</p></div>';
-    }
-  </script>
-</head>
+      function updateProductPrice(productID) {
+        var nbProduct = document.getElementById(productID + "_input").value;
+        $.ajax({
+          url: API_PRODUCTS + '/' + productID,
+          type: 'GET',
+          dataType: 'json',
+          timeout: 30000,
+          success: function(json) {
+            var productUnitPrice = json.unit_price;
+            document.getElementById(productID + "_price").innerHTML = '€' + productUnitPrice * nbProduct;
+          },
+          error: function(data) {}
+        });
+      }
 
-<body onload="getProductsList(); deliveryProcess();">
-  <div class="hero-full-screen">
+      function updateBasket(productID) {
+        if (localStorage.basket != null) {
+          var currentBasket = JSON.parse(localStorage.basket);
+        } else {
+          var currentBasket = [];
+        }
+        var singleProduct = {};
+        var quantity = document.getElementById(productID + "_input").value;
+        singleProduct['id'] = productID;
+        singleProduct['quantity'] = quantity;
+        currentBasket.push(singleProduct);
+        var totalBasketProducts = 0;
+        for (var i = 0; i < currentBasket.length; i++) {
+          totalBasketProducts = totalBasketProducts + Number(currentBasket[i].quantity);
+        }
+        localStorage.basket = JSON.stringify(currentBasket);
+        localStorage.totalBasketProducts = totalBasketProducts;
+        document.getElementById("basket").innerHTML = totalBasketProducts + ' products';
+        updateDeliverySection();
+      }
+
+      function deliveryProcess() {
+        if (localStorage.totalBasketProducts == null) {
+          localStorage.totalBasketProducts = 0;
+          localStorage.deliveryDistance = "-";
+          localStorage.deliveryCost = "-";
+          localStorage.totalPrice = "-";
+        }
+        if (document.getElementById("delivery_input").value != null && document.getElementById("delivery_input").value != "") {
+          var productsList = JSON.parse(localStorage.basket);
+          var payload = {};
+          payload['address'] = document.getElementById("delivery_input").value;
+          payload['products'] = productsList;
+          $.ajax({
+            url: API_COMMANDS,
+            type: 'POST',
+            headers: {
+              "Content-Type": "application/json"
+            },
+            dataType: 'json',
+            data: JSON.stringify(payload),
+            timeout: 30000,
+            success: function(json) {
+              localStorage.deliveryDistance = json.distance + "km";
+              localStorage.deliveryCost = "€" + json.delivery_cost;
+              localStorage.totalPrice = "€" + json.total_price;
+              updateDeliverySection();
+            },
+            error: function(data) {
+              localStorage.deliveryDistance = "-";
+              localStorage.deliveryCost = "-";
+              localStorage.totalPrice = "-";
+            }
+          });
+        }
+        updateDeliverySection();
+      }
+
+      function updateDeliverySection() {
+        document.getElementById("deliveryProcess").innerHTML = '<div class="card-profile-stats-statistic"><span class="stat">' + localStorage.totalBasketProducts +
+          '</span><p>Nb products</p></div><div class="card-profile-stats-statistic"><span class="stat">' + localStorage.deliveryDistance + '</span><p>Distance</p></div><div class="card-profile-stats-statistic"><span class="stat">' + localStorage.deliveryCost +
+          '</span><p>Delivery cost</p></div><div class="card-profile-stats-statistic"><span class="stat">' + localStorage.totalPrice + '</span><p>Total price</p></div>';
+      }
+    </script>
+  </head>
+
+  <body>
+    <div class="hero-full-screen">
       <div class="middle-content-section">
         <div style='width:30%'><img src="img/nexdigital_logo.png" /></div>
         <div>
@@ -155,49 +162,54 @@
           <img style="max-width: 50%; padding-right:20px" src="img/d2si-logo.png">
         </div>
       </div>
-    <div class="bottom-content-section" data-magellan data-threshold="0"> <a href="#products-content-section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-      <path d="M24 12c0-6.627-5.373-12-12-12s-12 5.373-12 12 5.373 12 12 12 12-5.373 12-12zm-18.005-1.568l1.415-1.414 4.59 4.574 4.579-4.574 1.416 1.414-5.995 5.988-6.005-5.988z" /></svg></a>
+      
+      <div class="bottom-content-section" data-magellan data-threshold="0"> <a href="#products-content-section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path d="M24 12c0-6.627-5.373-12-12-12s-12 5.373-12 12 5.373 12 12 12 12-5.373 12-12zm-18.005-1.568l1.415-1.414 4.59 4.574 4.579-4.574 1.416 1.414-5.995 5.988-6.005-5.988z" /></svg></a>
+      </div>
     </div>
-  </div>
-  <div id="products-content-section" data-magellan-target="products-content-section">
-    <div class="row small-up-2 medium-up-4 large-up-5 align-center">
-      <h3 style="margin-left: 2%; margin-top: 3%;"><img style="max-width: 4%; max-height: 4%; margin-top: -3%;" src="img/christmas-tree.png" /> Your catalog | <i class="fas fa-shopping-basket"></i>&nbsp;&nbsp;<span id="basket"><span></h3>
-      <div id="products-catalog" class="box"> </div>
+
+    <div id="products-content-section" data-magellan-target="products-content-section">
+      <div class="row small-up-2 medium-up-4 large-up-5 align-center">
+        <h3 style="margin-left: 2%; margin-top: 3%;"><img style="max-width: 4%; max-height: 4%; margin-top: -3%;" src="img/christmas-tree.png" /> Your catalog | <i class="fas fa-shopping-basket"></i>&nbsp;&nbsp;<span id="basket"><span></h3>
+        <div id="products-catalog" class="box"> </div>
+      </div>
     </div>
-  </div>
-  <div id="account-content-section" class="card-profile-stats">
-    <div class="card-profile-stats-intro">
-      <div class="card-profile-stats-intro-content">
-        <h3>Order</h3>
-        <div id="search-content-section" class="search-profile-stats" style="width: 1000px;">
-          <div class="input-group input-group-rounded"> <input id="delivery_input" class="input-group-field" value="" type="search" style="border-radius: 5000px 0 0 5000px;" placeholder="Enter your home address here">
-            <div class="input-group-button"> <input type="submit" class="button secondary" style="border-radius: 0 5000px 5000px 0; background-color: #22d69b; font-weight: bold;" value="Place your order" onclick="deliveryProcess();"> </div>
+
+    <div id="account-content-section" class="card-profile-stats">
+      <div class="card-profile-stats-intro">
+        <div class="card-profile-stats-intro-content">
+          <h3>Order</h3>
+          <div id="search-content-section" class="search-profile-stats">
+            <div class="input-group input-group-rounded"> <input id="delivery_input" class="input-group-field" value="" type="search" style="border-radius: 5000px 0 0 5000px;" placeholder="Enter your home address here">
+              <div class="input-group-button"> <input type="submit" class="button secondary" style="border-radius: 0 5000px 5000px 0; background-color: #22d69b; font-weight: bold;" value="Place your order" onclick="deliveryProcess();"> </div>
+            </div>
           </div>
         </div>
       </div>
+      <hr/>
+      <div id="deliveryProcess" class="card-profile-stats-container"></div>
     </div>
-    <hr />
-    <div id="deliveryProcess" class="card-profile-stats-container"></div>
-  </div>
-  <footer class="social-footer"> <img style="max-width: 30%; max-height: 30%;" src="img/nexdigital_logo_white.png" />
-    <div class="social-footer-left">
-      <div class="contact-details">
-        <ul>
-          <li><a data-toggle="animatedModal10" style="color: #e6e6e6;"><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;CONTACT US</a></li>
-          <li>Phone: +33 1 41 49 48 48</li>
-          <li>Address: 73 rue Anatole France, 92300 - Levallois-Perret, France</li>
+
+    <footer class="social-footer"> <img style="max-width: 30%; max-height: 30%;" src="img/nexdigital_logo_white.png" />
+      <div class="social-footer-left">
+        <div class="contact-details">
+          <ul>
+            <li><a data-toggle="animatedModal10" style="color: #e6e6e6;"><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;CONTACT US</a></li>
+            <li>Phone: +33 1 41 49 48 48</li>
+            <li>Address: 73 rue Anatole France, 92300 - Levallois-Perret, France</li>
+          </ul>
+        </div>
+      </div>
+      <div class="social-footer-icons">
+        <ul class="menu simple">
+          <li><a href="https://www.facebook.com/devoteam/"><i class="fab fa-facebook-square fa-3x" aria-hidden="true" style="color: #e6e6e6;"></i></a></li>
+          <li><a href="https://twitter.com/devoteam"><i class="fab fa-twitter-square fa-3x" aria-hidden="true" style="color: #e6e6e6;"></i></a></li>
+          <li><a href="https://www.youtube.com/user/devoteam"><i class="fab fa-youtube-square fa-3x" aria-hidden="true" style="color: #e6e6e6;"></i></a></li>
+          <li><a href="https://www.linkedin.com/company/18510518/"><i class="fab fa-linkedin-square fa-3x" aria-hidden="true" style="color: #e6e6e6;"></i></a></li>
         </ul>
       </div>
-    </div>
-    <div class="social-footer-icons">
-      <ul class="menu simple">
-        <li><a href="https://www.facebook.com/devoteam/"><i class="fab fa-facebook-square fa-3x" aria-hidden="true" style="color: #e6e6e6;"></i></a></li>
-        <li><a href="https://twitter.com/devoteam"><i class="fab fa-twitter-square fa-3x" aria-hidden="true" style="color: #e6e6e6;"></i></a></li>
-        <li><a href="https://www.youtube.com/user/devoteam"><i class="fab fa-youtube-square fa-3x" aria-hidden="true" style="color: #e6e6e6;"></i></a></li>
-        <li><a href="https://www.linkedin.com/company/18510518/"><i class="fab fa-linkedin-square fa-3x" aria-hidden="true" style="color: #e6e6e6;"></i></a></li>
-      </ul>
-    </div>
-  </footer>
-</body>
+    </footer>
 
+    <script>getProductsList(); deliveryProcess();</script>
+  </body>
 </html>
