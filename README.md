@@ -13,13 +13,14 @@ Setup Dynamo DB for the application
 
 AWS lamdba fonction to get the products list (id and name)
 Setup kong to expose a route and call the aws lambda function
-[step two](./workshop/step2/step2.md)
+[Step two](./workshop/step2/step2.md)
 
 ## Step three: get product details function 
 
 AWS lambda function to get a product detail
 Setup kong to expose a route and call the aws lambda function
 Setup front-end and activate CORS plugin at kong level
+[Step three](./workshop/step3/step3.md)
 
 ## Step four: put an order request
 
