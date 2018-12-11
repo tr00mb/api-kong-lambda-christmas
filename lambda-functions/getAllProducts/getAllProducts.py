@@ -11,10 +11,10 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 #DynamodDB table name and region
-DYNAMODB_REGION = "eu-west-3"
+DYNAMODB_REGION = "eu-west-2"
 DYNAMODB_TABLE_NAME ="kong"
 
-os.environ["AWS_DEFAULT_REGION"] = "eu-west-3"
+os.environ["AWS_DEFAULT_REGION"] = "eu-west-2"
 dynamodb = boto3.resource('dynamodb',DYNAMODB_REGION)
 
 #Bucket s3
