@@ -73,7 +73,7 @@ Open a command prompt window and replace the value with the ones in the email.
 ````
 set AWS_ACCESS_KEY_ID=" anaccesskey "
 set AWS_SECRET_ACCESS_KEY=" asecretkey "
-set AWS_DEFAULT_REGION="eu-west-3"
+set AWS_DEFAULT_REGION="eu-west-2"
 ````
 
 Deploy the stack
