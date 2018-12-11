@@ -2,7 +2,21 @@
 
 ## aws lambda function
 
-Create the getAllProducts function.
+
+### Create IAM roles for Lambda functions
+We need to create an IAM role for our future Lambda functions. This role will allow functions to
+interact with DynamoDB and the S3 bucket.
+- In the AWS console’s Services tab, click IAM under Security, Identity & Compliance, and
+then click Roles from the left navigation menu.
+- Click Create Role
+- In the Trust step, choose AWS Service and Lambda, and then click Next: Permissions
+- In the Permissions step, search for and check the boxes next to:
+  - AWSLambdaExecute
+  - AmazonS3ReadOnlyAccess
+  - AmazonDynamoDBReadOnlyAccess
+
+
+### Create the getAllProducts function.
 Create a new function, Author from scratch
 - Name
 getAllProducts
@@ -30,7 +44,7 @@ You should see a Success message
 
 ## create service, route and lambda plugin in kong
 
-Do no hesitate to read [kong configuration](../../kong/kond.md) to understand the configuration
+Do no hesitate to read kong/kond.md to understand the configuration
 </br> First, we create a generic service and a route to access it via /workshop/products 
 
 ```
