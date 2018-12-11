@@ -152,40 +152,44 @@
 
   <body>
     <div class="hero-full-screen">
-        <div class="middle-content-section">
-          <div style='width:30%'><img src="img/nexdigital_logo.png" /></div>
-          <div>
-            <h2 style='color:#b3b3b3'>Christmas Workshop</h2>
-            <img style="max-width: 20%;" src="img/apidays_logo.png">
-          </div>
-          <div style='width:30%; text-align:right'>
-            <img style="max-width: 50%; padding-right:20px" src="img/d2si-logo.png">
-          </div>
+      <div class="middle-content-section">
+        <div style='width:30%'><img src="img/nexdigital_logo.png" /></div>
+        <div>
+          <h2 style='color:#b3b3b3'>Christmas Workshop</h2>
+          <img style="max-width: 20%;" src="img/apidays_logo.png">
         </div>
+        <div style='width:30%; text-align:right'>
+          <img style="max-width: 50%; padding-right:20px" src="img/d2si-logo.png">
+        </div>
+      </div>
+      
       <div class="bottom-content-section" data-magellan data-threshold="0"> <a href="#products-content-section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
         <path d="M24 12c0-6.627-5.373-12-12-12s-12 5.373-12 12 5.373 12 12 12 12-5.373 12-12zm-18.005-1.568l1.415-1.414 4.59 4.574 4.579-4.574 1.416 1.414-5.995 5.988-6.005-5.988z" /></svg></a>
       </div>
     </div>
+
     <div id="products-content-section" data-magellan-target="products-content-section">
       <div class="row small-up-2 medium-up-4 large-up-5 align-center">
         <h3 style="margin-left: 2%; margin-top: 3%;"><img style="max-width: 4%; max-height: 4%; margin-top: -3%;" src="img/christmas-tree.png" /> Your catalog | <i class="fas fa-shopping-basket"></i>&nbsp;&nbsp;<span id="basket"><span></h3>
         <div id="products-catalog" class="box"> </div>
       </div>
     </div>
+
     <div id="account-content-section" class="card-profile-stats">
       <div class="card-profile-stats-intro">
         <div class="card-profile-stats-intro-content">
           <h3>Order</h3>
-          <div id="search-content-section" class="search-profile-stats" style="width: 1000px;">
+          <div id="search-content-section" class="search-profile-stats">
             <div class="input-group input-group-rounded"> <input id="delivery_input" class="input-group-field" value="" type="search" style="border-radius: 5000px 0 0 5000px;" placeholder="Enter your home address here">
               <div class="input-group-button"> <input type="submit" class="button secondary" style="border-radius: 0 5000px 5000px 0; background-color: #22d69b; font-weight: bold;" value="Place your order" onclick="deliveryProcess();"> </div>
             </div>
           </div>
         </div>
       </div>
-      <hr />
+      <hr/>
       <div id="deliveryProcess" class="card-profile-stats-container"></div>
     </div>
+
     <footer class="social-footer"> <img style="max-width: 30%; max-height: 30%;" src="img/nexdigital_logo_white.png" />
       <div class="social-footer-left">
         <div class="contact-details">
@@ -205,6 +209,7 @@
         </ul>
       </div>
     </footer>
+
     <script>getProductsList(); deliveryProcess();</script>
   </body>
 </html>

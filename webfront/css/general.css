@@ -283,3 +283,9 @@
     justify-content: space-between
   }
 }
+
+@media screen and (min-width:1023px) {
+  .search-profile-stats {
+    width: 800px;
+  }
+}
