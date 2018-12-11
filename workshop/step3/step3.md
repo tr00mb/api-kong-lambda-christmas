@@ -2,21 +2,21 @@
 
 ## aws lambda function
 
-Create the getProductDetails function. (refer to the doc (ref))
+Create the getProductDetails function.
+- Name: getProductsDetails
+- Runtime: python 3.7
+- Role -> Choose an existing role
+- lambda-dynamo-execution-role
+- Copy the content of : api-kong-lambda-christmas/lambda-functions/getProductsDetails.py
 
 ## create service, route and lambda plugin in kong
 
-Do no hesitate to read [kong configuration](../../kong/kond.md) to understand the configuration
+Do no hesitate to read [kong configuration](../../../../kong/kond.md) to understand the configuration
+It reuse the environnement variables defined in step2 (kong_admin, aws_key, aws_secret and aws_region)
 </br> We create a new route to the generic products service to access it via /workshop/products/{product_id}
 
 ```
-kong_admin=***IP/URL***:8001
-aws_key=***KEY***
-aws_secret=***SECRET***
-aws_region=eu-west-2
-
-curl -X POST --url http://$kong_admin/services/products/routes --data 'methods[]=GET' --data 'paths[]=/workshop/products/\S+'
-
+curl -X POST --url http://$kong_admin/services/products/routes --data 'methods[]=GET' --data-urlencode 'paths[]=/workshop/products/\S+'
 ```
 
 Then we have to add a plugin to the route (/workshop/products/{product_id}). To do it you have to use the route_id from the created route. Either you still have it on your screen, or you can curl $kong_admin/services/products/routes to retrieve the id
