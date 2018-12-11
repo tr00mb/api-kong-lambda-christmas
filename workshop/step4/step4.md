@@ -3,8 +3,8 @@
 ## aws lambda function
 
 Create the createNewCommand function. (refer to the doc (ref))
-As this fonction is calling other API, pay attention to the environnement variables
-Indeed createNewCommand call mapQuest through kong (/distances) and ProductDetails (/workshop/products/{product_id})
+</br>As this fonction is calling other API, pay attention to the environnement variables
+</br>Indeed createNewCommand call mapQuest through kong (/distances) and ProductDetails (/workshop/products/{product_id})
 
 ## create service, route and lambda plugin in kong
 
