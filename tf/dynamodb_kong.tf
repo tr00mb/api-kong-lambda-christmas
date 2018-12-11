@@ -92,16 +92,4 @@ resource "aws_dynamodb_table_item" "table-items2"{
 ITEM
 }
 
-resource "aws_dynamodb_table_item" "table-items1"{
-  table_name = "${aws_dynamodb_table.kong-dynamodb-table.name}"
-  hash_key   = "${aws_dynamodb_table.kong-dynamodb-table.hash_key}"
-  item       = <<ITEM
- {
-"id": { "N" : "5" },
-"nom": { "S" : "Game" },
-"libelle": { "S" : "Video Game"},
-"prix": { "N" : "50" },
-"iAmage_url": { "S" :"videoGame.png" }
- }
-ITEM
-}
+
