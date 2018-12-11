@@ -1,6 +1,8 @@
-# Step 2
+# Step 2 : Setup GET /products API
 
 ## aws lambda function
+
+Create the getAllProducts function. (refer to the doc (ref))
 
 ## create service, route and lambda plugin in kong
 
