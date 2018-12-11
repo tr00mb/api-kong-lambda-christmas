@@ -8,6 +8,7 @@ Create the getProductDetails function.
 - Role -> Choose an existing role
 - lambda-dynamo-execution-role
 - Copy the content of : api-kong-lambda-christmas/lambda-functions/getProductsDetails.py
+- Set up a environnement variable IMG_BUCKET with the value of your s3 bucket images directory
 
 ## create service, route and lambda plugin in kong
 
