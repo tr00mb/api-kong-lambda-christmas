@@ -32,4 +32,5 @@
 "libelle": { "S" : "Video Game"},
 "prix": { "N" : "50" },
 "image_url": { "S" :"videoGame.png" }
- }]
+ }
+]
