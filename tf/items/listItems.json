@@ -23,7 +23,7 @@
 "id": { "N" : "4" },
 "nom" : {"S" : "Train" },
 "libelle" : { "S" : "Electric train set" },
-"prix": { "N" : "100" } ,
+"prix": { "N" : "100" },
 "image_url": {"S" : "electricTrain.png" }
 },
 {
