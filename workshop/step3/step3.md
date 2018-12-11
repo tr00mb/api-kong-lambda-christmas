@@ -1,4 +1,4 @@
-# Step 2 : Setup GET /product/{product_id} API
+# Step 3 : Setup GET /product/{product_id} API
 
 ## aws lambda function
 
