@@ -40,40 +40,68 @@ resource "aws_dynamodb_table_item" "table-items"{
   table_name = "${aws_dynamodb_table.kong-dynamodb-table.name}"
   hash_key   = "${aws_dynamodb_table.kong-dynamodb-table.hash_key}"
   item       = <<ITEM
- [{
+ {
 "id": { "N" : "1" },
 "nom": {"S" : "Horse" },
 "libelle": {"S" :"Wooden Rocking Horse" },
 "prix": { "N" : "150" },
 "image_url": {"S" : "woodenHorse.png" }
-},
-{
+}
+ITEM
+}
+
+resource "aws_dynamodb_table_item" "table-items"{
+  table_name = "${aws_dynamodb_table.kong-dynamodb-table.name}"
+  hash_key   = "${aws_dynamodb_table.kong-dynamodb-table.hash_key}"
+  item       = <<ITEM
+ {
 "id": { "N" : "2" },
 "nom" : {"S" : "Doll" },
 "libelle": {"S" : "Rag Doll" },
  "prix": { "N" : "75" },
  "image_url": {"S" : "ragDoll.png" }
- },
-{
+ }
+ITEM
+}
+
+resource "aws_dynamodb_table_item" "table-items"{
+  table_name = "${aws_dynamodb_table.kong-dynamodb-table.name}"
+  hash_key   = "${aws_dynamodb_table.kong-dynamodb-table.hash_key}"
+  item       = <<ITEM
+ {
 "id": { "N" : "3" },
 "nom": {"S" : "Gingerbread" },
 "libelle": { "S" :"Gingerbread man" },
 "prix": { "N" : "30" },
-"image_url": { "S" : "Gingergit breadManTransparent.png" }
-},
-{
+"image_url": { "S" : "GingerbreadManTransparent.png" }
+}
+ITEM
+}
+
+resource "aws_dynamodb_table_item" "table-items"{
+  table_name = "${aws_dynamodb_table.kong-dynamodb-table.name}"
+  hash_key   = "${aws_dynamodb_table.kong-dynamodb-table.hash_key}"
+  item       = <<ITEM
+ {
 "id": { "N" : "4" },
 "nom" : {"S" : "Train" },
 "libelle" : { "S" : "Electric train set" },
 "prix": { "N" : "100" },
 "image_url": {"S" : "electricTrain.png" }
-},
-{
+}
+ITEM
+}
+
+resource "aws_dynamodb_table_item" "table-items"{
+  table_name = "${aws_dynamodb_table.kong-dynamodb-table.name}"
+  hash_key   = "${aws_dynamodb_table.kong-dynamodb-table.hash_key}"
+  item       = <<ITEM
+ {
 "id": { "N" : "5" },
 "nom": { "S" : "Game" },
 "libelle": { "S" : "Video Game"},
 "prix": { "N" : "50" },
 "image_url": { "S" :"videoGame.png" }
-}
+ }
 ITEM
 }
