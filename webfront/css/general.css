@@ -120,9 +120,7 @@
   background-color: #fefefe;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .2);
   border: 1px solid #e6e6e6;
-  margin-bottom: 25px;
   padding: 22px;
-  width: 300px
 }
 
 .product-details-add-to-cart .in-stock {
@@ -162,8 +160,6 @@
 
 .box {
   display: flex;
-  align-items: center;
-  justify-content: space-between
 }
 
 .card-profile-stats {
@@ -278,4 +274,12 @@
 .social-footer .social-footer-icons .fa:hover {
   color: #4a4a4a;
   transition: color .3s ease-in
+}
+
+@media screen and (max-width:780px) {
+  .box {
+    display: block;
+    align-items: center;
+    justify-content: space-between
+  }
 }
