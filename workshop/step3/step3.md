@@ -3,7 +3,7 @@
 ## aws lambda function
 
 Create the getProductDetails function.
-- Name: getProductsDetails
+- Name: getProductDetails
 - Runtime: python 3.7
 - Role -> Choose an existing role
 - lambda-dynamo-execution-role
