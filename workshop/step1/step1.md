@@ -12,8 +12,9 @@ The basic stack is :
 In order to deploy the stack you need:
 - awscli (for windows only)
 - terraform
-- the aws access keys (received by email amongst your AWS console’s credentials)
-  
+- aws access keys
+
+>In the context of API Days 2018 you will receive the aws access by email
 >You may receive an email with a wrong name. Ignore the incorrect information. It is a known issue.
 >You can safely use the credentials from the email.
 
