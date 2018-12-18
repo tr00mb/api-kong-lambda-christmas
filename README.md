@@ -8,6 +8,7 @@ Kong act as a poweful and flexible API gateway. You can use kong communauty edit
 Setup Dynamo DB for the application
 <br/>Setup S3 for image storage and web site storage
 <br/>Setup kong EC2 instance
+<br/>[Step one](./workshop/step1/step1.md)
 
 ## Step two: get products fonction
 
