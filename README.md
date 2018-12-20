@@ -7,7 +7,7 @@ Kong act as a poweful and flexible API gateway. You can use kong communauty edit
 
 Setup Dynamo DB for the application
 <br/>Setup S3 for image storage and web site storage
-<br/>Setup kong EC2 instance
+<br/>Setup kong EC2 instance -> running kong anywhere else such as locally on you desktop with docker is possible and will work the same way.
 <br/>[Step one](./workshop/step1/step1.md)
 
 ## Step two: get products fonction
